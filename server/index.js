@@ -44,6 +44,7 @@ const resolverCaso = (caso) => {
             return [...apt, minInicio, minFin]
           })
     agenda = countSort(agenda, min, max)
+    // console.log(agenda)
     let mayor = 0;
     let conversion = "";
     let fila = "";
