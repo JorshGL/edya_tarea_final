@@ -52,4 +52,4 @@ const countSort = (arr) => {
   return output;
 }
 
-console.log(countSort([[1, 1, 1, 1], [3, 3, 3, 3], [2, 2, 2, 2]]))
+console.log(countSort([['a', 'a', 1, 1], ['b', 'b', 3, 3], ['c', 'c', 2, 2]]))
