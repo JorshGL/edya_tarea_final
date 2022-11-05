@@ -29,8 +29,6 @@ const resolverCaso = (caso) => {
 
 resolverCaso("16:59 18:23 Otras,45:35 46:34 Otras,28:22 28:54 Reunión,41:52 42:10 Almuerzo,21:53 22:50 Reunión,33:42 34:34 Reunión,08:30 09:24 Otras--44:56 45:23 Reunión,08:47 10:04 Reunión,24:45 24:57 Reunión,35:03 35:34 PrepaClase,28:34 29:31 Reunión,20:48 21:06 Almuerzo")
 
-let arr = [1, 1000000, 3]
-
 const countSort = (arr) => {
   const max = Math.max(...arr);
   const min = Math.min(...arr);
@@ -39,7 +37,7 @@ const countSort = (arr) => {
   let count = Array.from({length: range}, (_, i) => 0);
   let output = Array.from({length: arr.length}, (_, i) => 0);
   for (i = 0; i < arr.length; i++) {
-      count[arr[i] - min]++;
+      count[arr[i][3] - min]++;
   }
 
   for (i = 1; i < count.length; i++) {
@@ -47,14 +45,11 @@ const countSort = (arr) => {
   }
 
   for (i = arr.length - 1; i >= 0; i--) {
-      output[count[arr[i] - min] - 1] = arr[i];
-      count[arr[i] - min]--;
+      output[count[arr[i][3] - min] - 1] = arr[i];
+      count[arr[i][3] - min]--;
   }
 
-  for (i = 0; i < arr.length; i++) {
-      arr[i] = output[i];
-  }
+  return output;
 }
 
-countSort(arr)
-console.log(arr)
+console.log(countSort([[1, 1, 1, 1], [3, 3, 3, 3], [2, 2, 2, 2]]))
