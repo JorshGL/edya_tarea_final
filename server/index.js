@@ -1,16 +1,20 @@
 
 const resolverCaso = (caso) => {
   caso.split('--').forEach((dia, index) => {
+    let max = 0;
+    let min = 3000;
     let agenda = dia.split(',')
           .map((appointment) => {
             const apt = appointment.split(' ')
             const inicio = apt[0].split(':')
             const fin = apt[1].split(':')
             const minInicio = Number(inicio[0])*60 + Number(inicio[1])
-            const minFin = Number(fin[0])*60 + Number(fin[1]) 
+            const minFin = Number(fin[0])*60 + Number(fin[1])
+            if (minInicio > max) max = minInicio;
+            if (minInicio < min) min = minInicio;
             return [...apt, minInicio, minFin]
           })
-          .sort((a, b) => a[3] - b[3])
+    agenda = countSort(agenda, min, max)
     let mayor = 0;
     let conversion = "";
     let fila = "";
@@ -27,24 +31,19 @@ const resolverCaso = (caso) => {
   })
 }
 
-resolverCaso("16:59 18:23 Otras,45:35 46:34 Otras,28:22 28:54 Reunión,41:52 42:10 Almuerzo,21:53 22:50 Reunión,33:42 34:34 Reunión,08:30 09:24 Otras--44:56 45:23 Reunión,08:47 10:04 Reunión,24:45 24:57 Reunión,35:03 35:34 PrepaClase,28:34 29:31 Reunión,20:48 21:06 Almuerzo")
-
-const countSort = (arr) => {
-  const max = Math.max(...arr);
-  const min = Math.min(...arr);
-
+const countSort = (arr, min, max) => {
   const range = max - min + 1;
   let count = Array.from({length: range}, (_, i) => 0);
   let output = Array.from({length: arr.length}, (_, i) => 0);
-  for (i = 0; i < arr.length; i++) {
+  for (let i = 0; i < arr.length; i++) {
       count[arr[i][3] - min]++;
   }
 
-  for (i = 1; i < count.length; i++) {
+  for (let i = 1; i < count.length; i++) {
       count[i] += count[i - 1];
   }
 
-  for (i = arr.length - 1; i >= 0; i--) {
+  for (let i = arr.length - 1; i >= 0; i--) {
       output[count[arr[i][3] - min] - 1] = arr[i];
       count[arr[i][3] - min]--;
   }
@@ -52,4 +51,4 @@ const countSort = (arr) => {
   return output;
 }
 
-console.log(countSort([['a', 'a', 1, 1], ['b', 'b', 3, 3], ['c', 'c', 2, 2]]))
+resolverCaso("16:59 18:23 Otras,45:35 46:34 Otras,28:22 28:54 Reunión,41:52 42:10 Almuerzo,21:53 22:50 Reunión,33:42 34:34 Reunión,08:30 09:24 Otras--44:56 45:23 Reunión,08:47 10:04 Reunión,24:45 24:57 Reunión,35:03 35:34 PrepaClase,28:34 29:31 Reunión,20:48 21:06 Almuerzo")
